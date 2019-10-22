@@ -21,7 +21,7 @@ cost_for_z = []
 
 
 # loading data from exel
-database1 = xlrd.open_workbook("D:/Projects/Git2/Search_Drone/Playing with TF and Keras/dataset3.xlsx")
+database1 = xlrd.open_workbook("D:/Projects/Git2/Search_Drone/Playing with TF and Keras/fix_dataset3.xlsx")
 sheet = database1.sheet_by_index(0)
 fileds = []
 
@@ -79,14 +79,15 @@ print("Output for training Shape:   ", Y_Test.shape)
 
 model =models.Sequential()
 
-model.add(layers.Dense(3, activation = 'relu', input_shape = (3,))) #layer 1
-model.add(layers.Dense(4))
-model.add(layers.Dense(1))
+model.add(layers.Dense(3, activation = 'tanh', use_bias = True, input_shape = (3,))) #layer 1
+model.add(layers.Dense(100, activation ='tanh', use_bias = True))
+model.add(layers.Dense(100, activation ='tanh', use_bias = True))
+model.add(layers.Dense(1, activation ='tanh', use_bias = True))
 
 model.summary()
 
-model.compile(optimizer = 'adam', loss = 'sparse_categorical_crossentropy', metrics = ['accuracy'])
-model.fit(X_Train, Y_Train, epochs=100, steps_per_epoch =1)
+model.compile(optimizer = 'sgd', loss = 'mean_squared_error', metrics = ['accuracy']) # sgd = Stochastic gradient descent optimizer.
+model.fit(X_Train, Y_Train, epochs=100, steps_per_epoch =100)
 
 
 
