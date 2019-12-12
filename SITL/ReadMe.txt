@@ -11,3 +11,11 @@ Now you can now opne mission planner and connect to UDP baus 921600 on port 1455
 
 Terminal 3 - Start your code , connect to 127.0.0.1:14550
 python .\Hover_and_Land.py  --connect 127.0.0.1:14550
+
+
+
+---------------------------------
+Common Errors:
+1. 1 link down with unsuccessful barometer calib 
+
+try : dronekit-sitl copter
