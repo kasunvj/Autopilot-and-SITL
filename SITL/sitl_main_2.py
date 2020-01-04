@@ -120,7 +120,7 @@ print(wayPointGet(1))
 vehicle.simple_goto(LocationGlobalRelative(float(wayPointGet(1)[0]),float(wayPointGet(1)[1]),30),groundspeed = 10)
 
 while(True):
-	print(vehicle.gps_0)
+	print(vehicle.location.global_relative_frame)
 	time.sleep(1)
 
 
