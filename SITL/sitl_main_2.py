@@ -32,8 +32,6 @@ def reporter():
 	print (" System status: %s" % vehicle.system_status.state)
 	print (" Mode: %s" % vehicle.mode.name)   # settable
 	print ("-----------------------------------------------------------")
-
-
 def arm_and_takeoff(targetAlt):
 	'''arm_and_takeoff
 	arming motors and lift off to a given alttude 
@@ -64,8 +62,6 @@ def arm_and_takeoff(targetAlt):
 			print ("Altitude Reached")
 			break
 		time.sleep(1)
-
-
 def wayPointGenaration():
 	'''
 	wayPointGenaration
@@ -90,9 +86,6 @@ def wayPointGenaration():
 		file1.write(str(i)+","+str(gps[i,0])+","+str(gps[i,1])+"\n")
 
 	file1.close()
-
-
-
 def wayPointGet(point):
 	'''
 	wayPointGet
@@ -113,28 +106,49 @@ def wayPointGet(point):
 
 
 
-arm_and_takeoff(30)
-wayPointGenaration()
-
-print(wayPointGet(1))
-vehicle.simple_goto(LocationGlobalRelative(float(wayPointGet(1)[0]),float(wayPointGet(1)[1]),30),groundspeed = 10)
-
-while(True):
-	print(vehicle.location.global_relative_frame)
-	time.sleep(1)
+arm_and_takeoff(5)
 
 
+
+# wayPointGenaration()
+
+# print(wayPointGet(1))
+# vehicle.simple_goto(LocationGlobalRelative(float(wayPointGet(1)[0]),float(wayPointGet(1)[1]),30),groundspeed = 10)
+
+ # while(True):
+ # 	print(vehicle.location.global_relative_frame)
+ # 	time.sleep(1)
+
+try:
+	cmds = vehicle.commands
+	cmds.clear()
+	lat = 7.08,
+	lon = 80.04
+	altitude = 30.0
+	cmd = Command(0,0,0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT,0, 0, 0, 0, 0, 0,lat, lon, altitude)
+	cmds.add(cmd)
+	cmds.upload()
+except:
+	print('Return to launch')
+	vehicle.mode = VehicleMode("RTL")
+	#Close vehicle object before exiting script
+	#print("Close vehicle object")
+	#vehicle.close()
+	# Shut down simulator if it was started.
+	if sitl is not None:
+		sitl.stop()
 
 print('Return to launch')
 vehicle.mode = VehicleMode("RTL")
-
-
 #Close vehicle object before exiting script
-print("Close vehicle object")
-vehicle.close()
-
+#print("Close vehicle object")
+#vehicle.close()
 # Shut down simulator if it was started.
 if sitl is not None:
-    sitl.stop()
+	sitl.stop()
+
+
+
+
 
 
