@@ -120,14 +120,7 @@ arm_and_takeoff(5)
  # 	time.sleep(1)
 
 try:
-	cmds = vehicle.commands
-	cmds.clear()
-	lat = 7.08,
-	lon = 80.04
-	altitude = 30.0
-	cmd = Command(0,0,0, mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT,0, 0, 0, 0, 0, 0,lat, lon, altitude)
-	cmds.add(cmd)
-	cmds.upload()
+	
 except:
 	print('Return to launch')
 	vehicle.mode = VehicleMode("RTL")
