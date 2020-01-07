@@ -21,12 +21,12 @@ import numpy as np
 
 
 #SITL
-#connection_string = '127.0.0.1:14550'
-#sitl = dronekit_sitl.start_default()
+connection_string = '127.0.0.1:14550'
+sitl = dronekit_sitl.start_default()
 
 #Actual Drone over micro USB Direrctly
 #connection_string = '/dev/ttyACM0'
-connection_string = '192.168.43.220:14550'
+#connection_string = '192.168.43.220:14550'
 
 #connection to FC
 try:

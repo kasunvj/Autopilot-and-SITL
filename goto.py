@@ -21,6 +21,8 @@ sitl = dronekit_sitl.start_default()
 #connection_string = '/dev/ttyACM0'
 #connection_string = '192.168.43.220:14550'
 
+alti = 15
+
 #connection to FC
 try:
     logging.info("Connecting to vehicle on: %s" % (connection_string,))
@@ -30,6 +32,8 @@ except:
     logging.info("Connection to FC: No go ")
 
 #Radio for emergency control
+
+
 
 try:
     # Access channels individually
@@ -90,7 +94,7 @@ except:
     logging.info("Arming : No Go")
 
 print("Guidance is internal--------------------------\n\n")
-print("Taking off\n\n")
+
 
 logging.info("Arming Motors")
 #vehicle.mode = VehicleMode("GUIDED")
@@ -100,18 +104,43 @@ while not vehicle.armed:
 	logging.info("Arming")
 	time.sleep(1)
 
-vehicle.simple_takeoff(5)
+time.sleep(5)
+logging.info("Ready to take off")
+vehicle.simple_takeoff(alti)
 
 while True:
     print("Altitude: ", vehicle.location.global_relative_frame.alt)
-    if vehicle.location.global_relative_frame.alt >= 5:
-        print("Altitude Reached")
+    if vehicle.location.global_relative_frame.alt >= alti*0.95:
+        logging.info("Altitude Reached")
         break
     time.sleep(1)
+#----------------Simple Mission---------------------------------------------------
+time.sleep(2)
 
-time.sleep(5)
 
-print("Landing")
+logging.info("Ready to move to 1st waypoint")
+vehicle.airspeed = 3;
+
+print("Going towards first point for 30 seconds ...")
+point1 = LocationGlobalRelative(6.7980226, 79.8995304, alti)
+vehicle.simple_goto(point1)
+time.sleep(30)
+
+print("Going towards Second point for 30 seconds ...")
+point1 = LocationGlobalRelative(6.7982676, 79.8999327, alti)
+vehicle.simple_goto(point1)
+time.sleep(30)
+
+print("Going towards Third point for 30 seconds ...")
+point1 = LocationGlobalRelative(6.7979906, 79.8998040, alti)
+vehicle.simple_goto(point1)
+time.sleep(30)
+
+#----------------------------------------------------------
+logging.info("Mission Done")
+
+
+logging.info("Landing")
 vehicle.mode = VehicleMode("LAND")
 
 while vehicle.armed:
